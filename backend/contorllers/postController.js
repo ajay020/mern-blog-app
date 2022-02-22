@@ -1,45 +1,63 @@
 const { v4: uuidv4 } = require('uuid');
+const Post = require('../models/postModel');
 
-let posts = [
-    {
-        id: "1",
-        title: "post title 1",
-        body: "post body 1"
-    },
-]
 
-const getPosts = (req, res) =>{
-    res.status(200).json(posts);
+const getPosts = async (req, res) =>{
+    try {
+        const posts = await Post.find();
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(400).json({ err : error.message});
+    }
 }
 
-const createPost = (req, res) => {
+const createPost = async(req, res) => {
+    if(!req.body){
+        res.status(400).json({msg : "Please enter data"});
+    }
     const newPost = {
-        id: uuidv4(),
         ...req.body 
     }
     
-    posts.push(newPost);
-    res.status(200).json(posts)
+    try {
+        const post  = await Post.create(newPost);
+        res.status(200).json(post);
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({error: error.message});
+    }
 }
 
-const updatePost = (req, res) => {
+const updatePost = async(req, res) => {
     const {postId} =  req.params;
-    const updates = req.body
 
-    posts = posts.map(post => {
-        if(post.id === postId){
-            let t = { ...post,...updates}
-            return t;
+    try {
+        const post = await Post.findById(postId);
+        if(post){
+            const updatedPost = await Post.findByIdAndUpdate(postId, req.body, {new: true});
+            res.status(200).json(updatedPost);
         }
-        return post;
-    })
-
-    res.status(200).json(posts);
+    } catch (error) {
+        res.status(400).json({err: error.message});
+    } 
 }
 
-const deletePost =(req, res)=>{
+const deletePost = async(req, res)=>{
     const {postId} = req.params;
-    posts = posts.filter(post => post.id !== postId);
+
+    try {
+        const post = await Post.findById(postId);
+        if(!post){
+            return res.status(400).json({msg: 'post not found'});
+        }else{
+            await post.remove();
+            res.status(200).json({id: postId});
+        }
+    } catch (error) {
+        res.status(400).json({err: error.message});
+    }
+
     res.status(200).json(posts)
 }
 
