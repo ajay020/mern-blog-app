@@ -4,6 +4,7 @@ const {
       updatePost, 
       deletePost,
       createPost } = require('../contorllers/postController');
+const protect = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -16,18 +17,18 @@ router.get("/", getPosts);
 //@ create new post
 // POST /api/posts
 //access private
-router.post("/", createPost)
+router.post("/", protect, createPost)
 
 
 //@ update post
 // PATCH /api/posts
 //access private
-router.patch("/:postId", updatePost);
+router.patch("/:postId",protect,  updatePost);
 
 //@ delete post
 // Delete /api/posts
 //access private
-router.delete("/:postId", deletePost)
+router.delete("/:postId",protect,  deletePost)
 
 
 
