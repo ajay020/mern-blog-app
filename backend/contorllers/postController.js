@@ -35,7 +35,8 @@ const updatePost = async(req, res) => {
            return res.status(401).json({msg: "Post not found"});
         }
         // check if post is created by current user
-        if(post.user.toString() !== req.user.id){
+        if(post.user.toString() !== req.user._id.toString()){
+            console.log(post.user, req.user._id);
             return res.status(401).json({msg: "User not authorized"});
         }
         //update post
@@ -56,7 +57,7 @@ const deletePost = async(req, res)=>{
             return res.status(400).json({msg: 'post not found'});
         }
         // check if post is created by current user
-        if(post.user.toString() !== req.user.id){
+        if(post.user.toString() !== req.user.id.toString()){
             return res.status(401).json({msg: "User not authorized"});
         }
         
