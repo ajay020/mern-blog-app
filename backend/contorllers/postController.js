@@ -17,7 +17,12 @@ const createPost = async(req, res) => {
     }
     
     try {
-        const post  = await Post.create({user:req.user.id, ...req.body});
+        const post  = await Post.create(
+            {
+                user:req.user.id,
+                username: req.user.name,
+                 ...req.body
+            });
         res.status(200).json(post);
 
     } catch (error) {
