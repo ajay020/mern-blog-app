@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import AddPost from './pages/AddPost';
 import UpdatePost from './pages/UpdatePost';
 import 'react-toastify/dist/ReactToastify.css';
+import PageNotFound from './pages/PageNotFound';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                 <Route path='/register' element = {<Register/>} />
                 <Route path='/addPost' element = {<AddPost/>} />
                 <Route path='/updatePost/:postId' element = {<UpdatePost />} />
+                <Route path="*" element={<PageNotFound/>}/>
 
             </Routes>
             <ToastContainer />
