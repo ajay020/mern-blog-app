@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewPost, reset } from "../features/post/postSlice";
 import { useNavigate } from "react-router-dom";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 
 const AddPost = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +16,12 @@ const AddPost = () => {
   const { posts, isError, isSuccess, isLoading, message } = useSelector(
     (state) => state.post
   );
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, []);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -39,7 +45,7 @@ const AddPost = () => {
   }
 
   return (
-    <div className="container w-50 mx-auto my-5 ">
+    <div className="container w-50 mx-auto my-5 pt-2 ">
       <h3 className="text-center">Create Post </h3>
       <form onSubmit={submitHandler}>
         <div className="form-group">

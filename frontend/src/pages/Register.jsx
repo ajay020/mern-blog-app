@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { registerUser } from "../features/auth/authSlice";
 import { reset } from "../features/auth/authSlice";
+
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,9 +22,13 @@ const Register = () => {
     (state) => state.auth
   );
 
+  //show toast message
+  const notify = (message) => toast(message);
+
   useEffect(() => {
     if (isError) {
       console.log(message);
+      notify(message);
     }
     if (isSuccess || user) {
       // register successful, go to home page
@@ -40,17 +46,24 @@ const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (!name || !email || !password) {
+      notify("Please enter all fields");
+      return;
+    }
+
     if (password !== password2) {
+      notify("Password didn't match");
       console.log("Password didn't match");
       return;
-    } else {
-      const userData = {
-        name,
-        email,
-        password,
-      };
-      dispatch(registerUser(userData));
     }
+
+    const userData = {
+      name,
+      email,
+      password,
+    };
+    dispatch(registerUser(userData));
   };
 
   if (isLoading) {
@@ -58,7 +71,7 @@ const Register = () => {
   }
 
   return (
-    <div className="container w-50 mx-auto my-5 ">
+    <div className="container w-50 mx-auto my-5 pt-2">
       <h3 className="text-center">Register</h3>
       <form onSubmit={submitHandler}>
         <div className="form-group">

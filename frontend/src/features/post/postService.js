@@ -25,7 +25,6 @@ const updatePost = async(post, token)=>{
         }
     }
     try {
-        console.log(typeof post.postId, token);
         const response = await axios.patch(API_URL+(post.postId).toString(), post.postData, config);
         return response.data; 
     } catch (error) {

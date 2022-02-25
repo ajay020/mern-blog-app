@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  //show toast message
+  const notify = (message) => toast(message);
 
   const { isSuccess, isError, user, isLoading, message } = useSelector(
     (state) => state.auth
@@ -22,7 +25,8 @@ const Login = () => {
   useEffect(() => {
     if (isError) {
       //show toast message
-      console.log(message);
+      notify(message);
+      console.log("err===", message);
     }
     if (user || isSuccess) {
       navigate("/");
@@ -44,7 +48,9 @@ const Login = () => {
       email,
       password,
     };
-    dispatch(loginUser(userData));
+    if (email && password) {
+      dispatch(loginUser(userData));
+    }
   };
 
   if (isLoading) {
@@ -52,7 +58,7 @@ const Login = () => {
   }
 
   return (
-    <div className="container w-50 mx-auto my-5 ">
+    <div className="container w-50 mx-auto my-5 pt-2 ">
       <h3 className="text-center">Login</h3>
       <form onSubmit={submitHandler}>
         <div className="form-group">

@@ -13,7 +13,7 @@ const getPosts = async (req, res) =>{
 
 const createPost = async(req, res) => {
     if(!req.body){
-        res.status(400).json({msg : "Please enter data"});
+        res.status(400).json({message : "Please enter data"});
     }
     
     try {
@@ -32,12 +32,12 @@ const updatePost = async(req, res) => {
     try {
         const post = await Post.findById(postId);
         if(!post){
-           return res.status(401).json({msg: "Post not found"});
+           return res.status(401).json({message: "Post not found"});
         }
         // check if post is created by current user
         if(post.user.toString() !== req.user._id.toString()){
             console.log(post.user, req.user._id);
-            return res.status(401).json({msg: "User not authorized"});
+            return res.status(401).json({message: "User not authorized"});
         }
         //update post
         const updatedPost = await Post.findByIdAndUpdate(postId, req.body, {new: true});
@@ -54,11 +54,11 @@ const deletePost = async(req, res)=>{
         const post = await Post.findById(postId);
 
         if(!post){
-            return res.status(400).json({msg: 'post not found'});
+            return res.status(400).json({message: 'post not found'});
         }
         // check if post is created by current user
         if(post.user.toString() !== req.user.id.toString()){
-            return res.status(401).json({msg: "User not authorized"});
+            return res.status(401).json({message: "User not authorized"});
         }
         
         await post.remove();

@@ -15,7 +15,7 @@ const login = async (req, res) => {
                 token: generateToken(user._id)
             })
         }else{
-           return res.status(400).json({msg: "Invalid credentails"});
+           return res.status(400).json({message: "Invalid credentails"});
         }
 
    } catch (error) {
@@ -34,7 +34,7 @@ const register = async (req, res) => {
    try {
        const existedUser = await User.findOne({email});
        if(existedUser){
-           return res.status(400).json({msg: "User is already exist!"});
+           return res.status(400).json({message: "User is already exist!"});
        }
 
       const salt = await bcrypt.genSalt(10) ;

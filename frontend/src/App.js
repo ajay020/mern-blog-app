@@ -1,10 +1,12 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import AddPost from './pages/AddPost';
 import UpdatePost from './pages/UpdatePost';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
                 <Route path='/updatePost/:postId' element = {<UpdatePost />} />
 
             </Routes>
+            <ToastContainer />
         </div>
     </Router>
   );
