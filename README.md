@@ -1,6 +1,6 @@
 ## Blog-App
 
-## Technologies Used
+### Technologies Used
 
 ### Frontend
 
