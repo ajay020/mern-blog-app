@@ -16,7 +16,7 @@ A Simple web app where you can write articles. You can write, edit and delete yo
 
 ## Demo
 
-    You can see demo on [Heroku](https://blogappajay.herokuapp.com/)
+    ##### You can see demo on [Heroku](https://blogappajay.herokuapp.com/)
 
 ## Usage
 
