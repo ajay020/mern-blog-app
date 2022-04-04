@@ -1,3 +1,5 @@
+import { useGoogleLogout } from "react-google-login";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
@@ -9,11 +11,21 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const [isCollapse, setIsCollapse] = useState(true);
 
+  const onSuccess = (res) => {
+    console.log("Logout made successfully ");
+  };
+
+  const { signOut } = useGoogleLogout({
+    clientId: process.env.CLIENT_ID,
+    onSuccess,
+  });
+
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
     navigate("/");
     setIsCollapse(!isCollapse);
+    signOut();
   };
 
   return (

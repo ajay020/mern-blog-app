@@ -7,7 +7,8 @@
     "start": "node backend/server.js",
     "client": "npm start --prefix frontend",
     "server": "nodemon backend/server.js",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "test": "jest",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Ajay kumar meena",
   "license": "ISC",
@@ -17,9 +18,17 @@
     "colors": "^1.4.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "google-auth-library": "^7.14.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.3",
     "nodemon": "^2.0.15",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
   }
 }

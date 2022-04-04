@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
+import GoogleSignIn from "./../components/GoogleSignIn";
+import GoogleSignOut from "../components/GoogleSignOut";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -60,6 +62,10 @@ const Login = () => {
   return (
     <div className="container w-50 mx-auto my-5 pt-2 ">
       <h3 className="text-center">Login</h3>
+
+      {/* <GoogleSignIn /> */}
+      {/* <GoogleSignOut /> */}
+
       <form onSubmit={submitHandler}>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>

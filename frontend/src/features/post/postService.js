@@ -8,6 +8,7 @@ const getPosts = async () =>{
 }
 
 const createPost = async (postData, token) =>{
+    
     const config = {
         headers :{
             Authorization: `Bearer ${token}`

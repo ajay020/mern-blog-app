@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { registerUser } from "../features/auth/authSlice";
 import { reset } from "../features/auth/authSlice";
+import GoogleSignIn from "../components/GoogleSignIn";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const Register = () => {
 
     if (password !== password2) {
       notify("Password didn't match");
-      console.log("Password didn't match");
+      //   console.log("Password didn't match");
       return;
     }
 
@@ -73,6 +74,9 @@ const Register = () => {
   return (
     <div className="container w-50 mx-auto my-5 pt-2">
       <h3 className="text-center">Register</h3>
+
+      <GoogleSignIn />
+
       <form onSubmit={submitHandler}>
         <div className="form-group">
           <label htmlFor="name">Name</label>

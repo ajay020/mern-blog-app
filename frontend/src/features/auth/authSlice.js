@@ -40,6 +40,20 @@ export const loginUser = createAsyncThunk('auth/login', async(user, thunkAPI) =>
     }
 })
 
+// login with google
+export const loginWithGoogle = createAsyncThunk('auth/loginWighGoogle', async(googleTokenId, thunkAPI) =>{
+    try {
+        return await authService.loginGoogle(googleTokenId);
+    } catch (error) {
+        const message = (error.response && 
+            error.response.data && 
+            error.response.data.message)||
+            error.message ||
+            error.toString();
+            return thunkAPI.rejectWithValue(message);
+    }
+})
+
 // logout user
 export const logout = createAsyncThunk('auth/logout', async() =>{
     authService.logout();
@@ -81,6 +95,20 @@ const authSlice = createSlice({
                 state.user = action.payload;
             })
             .addCase(loginUser.rejected, (state, action)=>{
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+                state.user = null; 
+            })
+            .addCase(loginWithGoogle.pending, (state, action)=>{
+                state.isLoading = true;
+            })
+            .addCase(loginWithGoogle.fulfilled, (state, action)=>{
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user = action.payload;
+            })
+            .addCase(loginWithGoogle.rejected, (state, action)=>{
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
