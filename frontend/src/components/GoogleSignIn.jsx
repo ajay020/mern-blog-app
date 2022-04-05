@@ -17,7 +17,7 @@ const GoogleSignIn = () => {
   return (
     <>
       <GoogleLogin
-        clientId={process.env.CLIENT_ID}
+        clientId={process.env.REACT_APP_CLIENT_ID}
         buttonText="Login"
         onSuccess={onSuccess}
         onFailure={onFailure}

@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   const { signOut } = useGoogleLogout({
-    clientId: process.env.CLIENT_ID,
+    clientId: process.env.REACT_APP_CLIENT_ID,
     onSuccess,
   });
 

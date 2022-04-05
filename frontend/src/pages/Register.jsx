@@ -75,8 +75,6 @@ const Register = () => {
     <div className="container w-50 mx-auto my-5 pt-2">
       <h3 className="text-center">Register</h3>
 
-      <GoogleSignIn />
-
       <form onSubmit={submitHandler}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -127,12 +125,17 @@ const Register = () => {
             name="password2"
           />
         </div>
-        <div className="form-group my-2">
+        <div className="form-group text-center my-2">
           <button type="submit" className="btn btn-primary">
             Register
           </button>
         </div>
       </form>
+      <div className="text-center">
+        <p>Or</p>
+        <p>Login with Google Account</p>
+        <GoogleSignIn />
+      </div>
     </div>
   );
 };

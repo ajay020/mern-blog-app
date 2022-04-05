@@ -92,12 +92,17 @@ const Login = () => {
             value={password}
           />
         </div>
-        <div className="form-group my-2">
+        <div className="form-group text-center my-2">
           <button type="submit" className="btn btn-primary">
             Login
           </button>
         </div>
       </form>
+      <div className="text-center">
+        <p>Or</p>
+        <p>Login with Google Account</p>
+        <GoogleSignIn />
+      </div>
     </div>
   );
 };
