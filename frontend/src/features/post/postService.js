@@ -43,11 +43,29 @@ const deletePost = async (postId, token) =>{
     return response.data; 
 }
 
+const upvotePost = async (postId, token) => {
+    const config = {
+        headers :{
+            Authorization: `Bearer ${token}`
+        }
+    }
+    try {
+        const response = await axios.post(API_URL + "upvote/" + postId, {},  config);
+        console.log("response data >>>>",response.data);
+    
+        return response.data;    
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
+
 const postService = {
     getPosts,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    upvotePost 
 }
 
 export default postService;

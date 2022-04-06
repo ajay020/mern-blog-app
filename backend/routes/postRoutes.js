@@ -3,7 +3,8 @@ const {
       getPosts,
       updatePost, 
       deletePost,
-      createPost } = require('../contorllers/postController');
+      createPost, 
+      upvotePost} = require('../contorllers/postController');
 const protect = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -29,6 +30,11 @@ router.patch("/:postId",protect,  updatePost);
 // Delete /api/posts
 //access private
 router.delete("/:postId",protect,  deletePost)
+
+//@ upvote post
+// POST /api/posts
+//access private
+router.post("/upvote/:postId",protect, upvotePost)
 
 
 

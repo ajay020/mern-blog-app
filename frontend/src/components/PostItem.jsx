@@ -1,11 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deletePost } from "../features/post/postSlice";
+import { FaThumbsUp } from "react-icons/fa";
+import { FiThumbsUp } from "react-icons/fi";
+import { BsBookmark, BsBookFill } from "react-icons/bs";
+import { upvotePost } from "./../features/post/postSlice";
+import { useState } from "react";
 
 const PostItem = ({
-  post: { _id, user, username, title, content, createdAt },
+  post: { _id, user, username, title, content, createdAt, upvotes },
 }) => {
   const { user: currentuser } = useSelector((state) => state.auth);
+  const [toggleLike, setToggleLike] = useState(false);
   const dispatch = useDispatch();
 
   //   console.log(currentuser, typeof currentuser);
@@ -16,6 +22,13 @@ const PostItem = ({
   let date = new Date(createdAt);
   let formatedDate =
     date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
+
+  let handleUpvote = (postId) => {
+    if (currentuser) {
+      dispatch(upvotePost(postId));
+      setToggleLike(!toggleLike);
+    }
+  };
 
   return (
     <div className="card my-2" style={{ width: "26rem" }}>
@@ -48,8 +61,23 @@ const PostItem = ({
           </div>
         </div>
         <hr className=" my-1 p-0" />
-
         <p className="card-text">{content}</p>
+      </div>
+      <div className="card-footer p-1 d-flex justify-content-between">
+        <div className="d-flex align-items-center ms-3 my-auto">
+          {toggleLike ? (
+            <FiThumbsUp role={"button"} onClick={() => handleUpvote(_id)} />
+          ) : (
+            <FaThumbsUp role={"button"} onClick={() => handleUpvote(_id)} />
+          )}
+
+          <span className="ms-2 text-secondary">{upvotes.length}</span>
+        </div>
+        <div>
+          <div className="me-3">
+            <BsBookmark />
+          </div>
+        </div>
       </div>
     </div>
   );

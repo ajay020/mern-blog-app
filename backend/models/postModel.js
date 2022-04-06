@@ -17,6 +17,9 @@ const postSchema = mongoose.Schema({
     content:{
         type:String,
     },
+    upvotes:{
+        type: [mongoose.Types.ObjectId],
+    }
 },
 {
     timestamps:true 

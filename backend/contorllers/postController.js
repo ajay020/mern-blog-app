@@ -73,9 +73,43 @@ const deletePost = async(req, res)=>{
     }
 }
 
+const upvotePost = async (req, res) =>{
+    const {postId} = req.params; 
+    try {
+        const post  = await Post.findById(postId);
+        // console.log("before >>> ",post);
+        if(!post){
+            return res.status(400).json({message: "Post not found"});
+        }
+        
+        // let x = await Post.findById(postId,{upvotes: {$elemMatch: { $eq: req.user._id } }})
+        // console.log("dddd", post.upvotes.includes(req.user._id));
+
+        if(post.upvotes.includes(req.user._id)){
+           await post.upvotes.pull(req.user._id);
+            // console.log("yyyy", y);
+
+        }else{
+            await post.upvotes.push(req.user._id);
+            // let updatedPost = await Post.findByIdAndUpdate(
+            //     postId, 
+            //     {$addToSet:{upvotes: req.user._id }}, 
+            //     { upsert: true },
+            // )
+        }
+        await post.save();
+        // console.log(post);
+        res.status(200).json(post);
+        
+    } catch (error) {
+        res.status(400).json({err: error.message});
+    }
+}
+
 module.exports = {
     getPosts,
     createPost,
     updatePost,
-    deletePost 
+    deletePost ,
+    upvotePost 
 }
