@@ -119,16 +119,14 @@ const bookmarkPost = async(req, res)=>{
 
 const getBookMarkPosts = async(req, res) =>{
     try {
-     const bookmarks = await User.findById(req.user._id).bookmarkedPosts;
-     console.log("bookmarks", bookmarks);
-
-     res.status(200).json(bookmarks);
+     const user = await User.findById(req.user._id).populate("bookmarkedPosts", 'title');
+    //   console.log("bookmarks", user.bookmarkedPosts);
+     res.status(200).json( user.bookmarkedPosts);
     } catch (error) {
         console.log(error);
         res.status(400).json({err: error.message});
     }
 }
-
 
 const generateToken = (id) =>{
     return jwt.sign({id}, process.env.JWT_SECRET_KEY, {expiresIn:"30d"});

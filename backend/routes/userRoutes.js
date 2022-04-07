@@ -12,7 +12,7 @@ router.post("/auth/google", googleAuth);
 
 router.post("/bookmark-post",protect, bookmarkPost);
 
-router.post("/get-bookmark-posts",protect, getBookMarkPosts);
+router.get("/get-bookmark-posts",protect, getBookMarkPosts);
 
 
 router.post("/me",protect, getMe);

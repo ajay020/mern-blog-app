@@ -4,7 +4,6 @@ import PostItem from "../components/PostItem";
 import Spinner from "../components/Spinner";
 import { getPosts, reset } from "../features/post/postSlice";
 import { toast } from "react-toastify";
-import { getBookMarkPosts } from "./../features/auth/authSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -24,15 +23,6 @@ const Home = () => {
     if (x > y) return -1;
     return 0;
   });
-
-  useEffect(() => {
-    function fetchBookMarkPosts() {
-      dispatch(getBookMarkPosts());
-    }
-    if (currentUser) {
-      fetchBookMarkPosts();
-    }
-  }, []);
 
   useEffect(() => {
     if (isError) {
@@ -61,7 +51,7 @@ const Home = () => {
       {sortedPost.length > 0 ? (
         sortedPost.map((post) => <PostItem key={post._id} post={post} />)
       ) : (
-        <p>No post available</p>
+        <h1>No post available</h1>
       )}
     </div>
   );

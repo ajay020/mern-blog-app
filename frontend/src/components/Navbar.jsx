@@ -64,14 +64,24 @@ const Navbar = () => {
               </Link>
             </li>
             {user && (
-              <li
-                className="nav-item me-auto"
-                onClick={() => setIsCollapse(!isCollapse)}
-              >
-                <Link className="nav-link" to="addPost">
-                  New Post
-                </Link>
-              </li>
+              <>
+                <li
+                  className="nav-item"
+                  onClick={() => setIsCollapse(!isCollapse)}
+                >
+                  <Link className="nav-link" to="/bookmarked-posts">
+                    Bookmarks
+                  </Link>
+                </li>
+                <li
+                  className="nav-item me-auto"
+                  onClick={() => setIsCollapse(!isCollapse)}
+                >
+                  <Link className="nav-link" to="addPost">
+                    Create Post
+                  </Link>
+                </li>
+              </>
             )}
 
             {user ? (

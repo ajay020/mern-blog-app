@@ -23,7 +23,7 @@ const login = async (userData) =>{
 const loginGoogle = async(googleTokenId) =>{
     const response = await axios.post(API_URL + 'auth/google', {googleTokenId});
 
-    console.log("data", response.data);
+    // console.log("data", response.data);
 
 
     if(response.data){

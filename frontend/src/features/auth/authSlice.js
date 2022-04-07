@@ -10,6 +10,7 @@ const initialState = {
     isSuccess: false,
     isLoading: false,
     message: '',
+    bookMarks:[]
 }
 
 // register user
@@ -70,11 +71,13 @@ export const bookMarkPost = createAsyncThunk("auth/bookmark", async(postId, thun
 })
 
 //get all bookmark posts
-export const getBookMarkPosts = createAsyncThunk("auth/getbookmarkposts", async(thunkAPI) => {
+export const getBookMarkPosts = createAsyncThunk("auth/getbookmarkposts", async( x={} ,thunkAPI) => {
     try {
+        // console.log("ddddddddddddd", thunkAPI)
         const token = thunkAPI.getState().auth.user?.token;
         return await authService.getBookMarkPosts( token);
     } catch (error) {
+        console.log(error);
         const message = (error.response && 
             error.response.data && 
             error.response.data.message)||
@@ -166,12 +169,19 @@ const authSlice = createSlice({
                 const user =  JSON.parse (localStorage.getItem('user'));
                 user.bookmarkedPosts = state.user.bookmarkedPosts;
                 localStorage.setItem('user', JSON.stringify(user));
-
+            })
+            .addCase(getBookMarkPosts.pending, (state, action)=>{
+                state.isLoading = false;
             })
             .addCase(getBookMarkPosts.fulfilled, (state, action)=>{
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.user.bookmarkedPosts = [ ...action.payload];
+                state.bookMarks = [...action.payload];
+            })
+            .addCase(getBookMarkPosts.rejected, (state, action)=>{
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
             })
     }
 });

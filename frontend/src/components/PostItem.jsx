@@ -16,7 +16,7 @@ const PostItem = ({
   const isUpvoted = upvotes.some((userId) => currentuser?._id === userId);
 
   const isBookMarked = currentuser?.bookmarkedPosts?.some(
-    (item) => item._id.toString() === _id.toString()
+    (item) => item._id?.toString() === _id?.toString()
   );
 
   const [toggleLike, setToggleLike] = useState(isUpvoted);
