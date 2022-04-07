@@ -4,12 +4,14 @@ import PostItem from "../components/PostItem";
 import Spinner from "../components/Spinner";
 import { getPosts, reset } from "../features/post/postSlice";
 import { toast } from "react-toastify";
+import { getBookMarkPosts } from "./../features/auth/authSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
   const { posts, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.post
   );
+  const currentUser = useSelector((state) => state.auth.user);
 
   //show toast message
   const notify = (message) => toast(message);
@@ -22,6 +24,15 @@ const Home = () => {
     if (x > y) return -1;
     return 0;
   });
+
+  useEffect(() => {
+    function fetchBookMarkPosts() {
+      dispatch(getBookMarkPosts());
+    }
+    if (currentUser) {
+      fetchBookMarkPosts();
+    }
+  }, []);
 
   useEffect(() => {
     if (isError) {

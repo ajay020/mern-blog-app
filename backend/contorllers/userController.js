@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
+const Post = require('../models/postModel');
+
 
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
@@ -19,20 +21,21 @@ const googleAuth = async (req, res) =>{
     if(!user){
         user = await User.create({name, email});
     }
-
-    res.json({_id:user.id, name: user.name, email: user.email, token: googleTokenId}); 
+    // console.log(">>>>",user._doc);
+    res.json({...user._doc, token: googleTokenId}); 
 }
 
 const login = async (req, res) => {
     const {email, password}  = req.body;
     try {
-        const user = await User.findOne({email});
-
+        const user = await User.findOne({email}).populate('bookmarkedPosts', 'title');
         if(user && (await bcrypt.compare(password, user.password))){
+
             res.status(201).json({
-                _id: user.id, 
-                name: user.name,
-                email: user.email,
+                _id: user._id,
+                name: user.name, 
+                email:user.email,
+                bookmarkedPosts: user.bookmarkedPosts, 
                 token: generateToken(user._id)
             })
         }else{
@@ -85,6 +88,48 @@ const getMe = async(req, res) => {
     }
 }
 
+const bookmarkPost = async(req, res)=>{
+    const {postId} = req.body;
+    try {
+        let post = await Post.findById(postId);
+        if(!post){
+            return res.status(400).json({msg: "No post found with given postId"});
+        }
+
+        let user = await User.findById(req.user._id).select('-password');
+        
+        if(user.bookmarkedPosts.includes(postId)){
+            await user.bookmarkedPosts.pull(postId);
+            await user.save();
+            // res.status(200).json({msg: "removed bookmark successfully!"});
+        }else{
+            await user.bookmarkedPosts.push(postId);
+            await user.save();
+            // res.status(200).json({msg: "bookmarked successfully!"});
+        }
+
+        res.status(200).json({_id: post._id, title: post.title});
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({err: error.message});
+    }
+}
+
+const getBookMarkPosts = async(req, res) =>{
+    try {
+     const bookmarks = await User.findById(req.user._id).bookmarkedPosts;
+     console.log("bookmarks", bookmarks);
+
+     res.status(200).json(bookmarks);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({err: error.message});
+    }
+}
+
+
 const generateToken = (id) =>{
     return jwt.sign({id}, process.env.JWT_SECRET_KEY, {expiresIn:"30d"});
 }
@@ -94,5 +139,7 @@ module.exports = {
     login, 
     register,
     googleAuth,
-    getMe
+    getMe,
+    bookmarkPost,
+    getBookMarkPosts
 }

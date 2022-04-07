@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const {Schema} = mongoose; 
 
-const userSchema = mongoose.Schema({
+const userSchema = Schema({
     name: {
         type:String,
         required:[true, 'Plaeas add name']
@@ -12,7 +13,14 @@ const userSchema = mongoose.Schema({
     password: {
         type:String,
         required:[false, 'Please add password']
-    }
+    },
+    // bookmarkedPosts:{
+    //     type: [mongoose.Types.ObjectId]
+    // },
+    bookmarkedPosts:[{
+        type: mongoose.Types.ObjectId, 
+        ref: 'Post'
+    }]
 },
 {
     timestamps:true 

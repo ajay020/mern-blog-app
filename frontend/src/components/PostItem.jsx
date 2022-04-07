@@ -6,15 +6,23 @@ import { FiThumbsUp } from "react-icons/fi";
 import { BsBookmark, BsBookFill } from "react-icons/bs";
 import { upvotePost } from "./../features/post/postSlice";
 import { useState } from "react";
+import { bookMarkPost } from "../features/auth/authSlice";
 
 const PostItem = ({
   post: { _id, user, username, title, content, createdAt, upvotes },
 }) => {
   const { user: currentuser } = useSelector((state) => state.auth);
-  const [toggleLike, setToggleLike] = useState(false);
+
+  const isUpvoted = upvotes.some((userId) => currentuser?._id === userId);
+
+  const isBookMarked = currentuser?.bookmarkedPosts?.some(
+    (item) => item._id.toString() === _id.toString()
+  );
+
+  const [toggleLike, setToggleLike] = useState(isUpvoted);
+  const [toggleBookMark, setToggleBookMark] = useState(isBookMarked);
   const dispatch = useDispatch();
 
-  //   console.log(currentuser, typeof currentuser);
   const onClickHandler = (postId) => {
     dispatch(deletePost(postId));
   };
@@ -27,6 +35,13 @@ const PostItem = ({
     if (currentuser) {
       dispatch(upvotePost(postId));
       setToggleLike(!toggleLike);
+    }
+  };
+
+  let handleBookMark = (postId) => {
+    if (currentuser) {
+      dispatch(bookMarkPost(postId));
+      setToggleBookMark(!toggleBookMark);
     }
   };
 
@@ -63,19 +78,23 @@ const PostItem = ({
         <hr className=" my-1 p-0" />
         <p className="card-text">{content}</p>
       </div>
-      <div className="card-footer p-1 d-flex justify-content-between">
-        <div className="d-flex align-items-center ms-3 my-auto">
+      <div className="card-footer p-2 d-flex justify-content-between">
+        <div className="d-flex align-items-center  ms-3">
           {toggleLike ? (
-            <FiThumbsUp role={"button"} onClick={() => handleUpvote(_id)} />
-          ) : (
             <FaThumbsUp role={"button"} onClick={() => handleUpvote(_id)} />
+          ) : (
+            <FiThumbsUp role={"button"} onClick={() => handleUpvote(_id)} />
           )}
 
           <span className="ms-2 text-secondary">{upvotes.length}</span>
         </div>
         <div>
           <div className="me-3">
-            <BsBookmark />
+            {toggleBookMark ? (
+              <BsBookFill role={"button"} onClick={() => handleBookMark(_id)} />
+            ) : (
+              <BsBookmark role={"button"} onClick={() => handleBookMark(_id)} />
+            )}
           </div>
         </div>
       </div>

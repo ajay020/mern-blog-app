@@ -54,6 +54,36 @@ export const loginWithGoogle = createAsyncThunk('auth/loginWighGoogle', async(go
     }
 })
 
+//bookmark post
+export const bookMarkPost = createAsyncThunk("auth/bookmark", async(postId, thunkAPI) =>{
+    try {
+        const token = thunkAPI.getState().auth.user?.token;
+        return await authService.bookMarkPost(postId, token);
+    } catch (error) {
+        const message = (error.response && 
+            error.response.data && 
+            error.response.data.message)||
+            error.message ||
+            error.toString();
+            return thunkAPI.rejectWithValue(message);
+    }
+})
+
+//get all bookmark posts
+export const getBookMarkPosts = createAsyncThunk("auth/getbookmarkposts", async(thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user?.token;
+        return await authService.getBookMarkPosts( token);
+    } catch (error) {
+        const message = (error.response && 
+            error.response.data && 
+            error.response.data.message)||
+            error.message ||
+            error.toString();
+            return thunkAPI.rejectWithValue(message);
+    }
+})
+
 // logout user
 export const logout = createAsyncThunk('auth/logout', async() =>{
     authService.logout();
@@ -116,6 +146,32 @@ const authSlice = createSlice({
             })
             .addCase(logout.fulfilled, (state, action)=>{
                 state.user = null;
+            })
+            .addCase(bookMarkPost.fulfilled, (state, action)=>{
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.message = action.payload
+
+                const {_id : postId} = action.payload;
+                let {bookmarkedPosts} = state.user;
+
+
+                if(bookmarkedPosts.some(post => post._id === postId)){
+                    state.user.bookmarkedPosts =  bookmarkedPosts.filter(post => post._id !== postId);
+                }else{
+                    bookmarkedPosts.push(action.payload);
+                }
+
+                // update user stored in local storage
+                const user =  JSON.parse (localStorage.getItem('user'));
+                user.bookmarkedPosts = state.user.bookmarkedPosts;
+                localStorage.setItem('user', JSON.stringify(user));
+
+            })
+            .addCase(getBookMarkPosts.fulfilled, (state, action)=>{
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user.bookmarkedPosts = [ ...action.payload];
             })
     }
 });

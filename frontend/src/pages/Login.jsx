@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import GoogleSignIn from "./../components/GoogleSignIn";
-import GoogleSignOut from "../components/GoogleSignOut";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +27,6 @@ const Login = () => {
     if (isError) {
       //show toast message
       notify(message);
-      console.log("err===", message);
     }
     if (user || isSuccess) {
       navigate("/");

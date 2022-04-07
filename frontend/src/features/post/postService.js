@@ -51,7 +51,7 @@ const upvotePost = async (postId, token) => {
     }
     try {
         const response = await axios.post(API_URL + "upvote/" + postId, {},  config);
-        console.log("response data >>>>",response.data);
+        // console.log("response data >>>>",response.data);
     
         return response.data;    
     } catch (error) {

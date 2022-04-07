@@ -11,7 +11,7 @@ const protect = async(req, res, next)=>{
         try {
             //get token from header
             token = req.headers.authorization.split(' ')[1];
-
+            // console.log("token", token);
             // check if token is from google sign in
             if(token.length > 500){
                     //verify goolge auth token
