@@ -45,8 +45,13 @@ const Home = () => {
       className="
         container-fluid d-flex
         flex-column align-items-center
-        bg-secondary  vh-100"
-      style={{ marginTop: "55px" }}
+          "
+      style={{
+        marginTop: "55px",
+        // height: "100vh",
+        // position: "relative",
+        paddingBottom: "2rem",
+      }}
     >
       {sortedPost.length > 0 ? (
         sortedPost.map((post) => <PostItem key={post._id} post={post} />)

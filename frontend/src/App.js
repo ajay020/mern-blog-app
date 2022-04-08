@@ -10,9 +10,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import PageNotFound from './pages/PageNotFound';
 import BookMarkPostList from './components/BookMarkPostList';
 import PostDetails from './pages/PostDetails';
+import { useEffect } from 'react';
 
 
 function App() {
+
+    useEffect(() =>{
+        document.body.style.backgroundColor = "#555";
+    }, [])
+
   return (
       <Router>
         <div>

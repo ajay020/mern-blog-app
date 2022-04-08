@@ -58,11 +58,11 @@ const Login = () => {
   }
 
   return (
-    <div className="container w-50 mx-auto my-5 pt-2 ">
+    <div
+      className="container w-50 mx-auto p-2 bg-secondary text-black"
+      style={{ marginTop: "5rem" }}
+    >
       <h3 className="text-center">Login</h3>
-
-      {/* <GoogleSignIn /> */}
-      {/* <GoogleSignOut /> */}
 
       <form onSubmit={submitHandler}>
         <div className="form-group">
