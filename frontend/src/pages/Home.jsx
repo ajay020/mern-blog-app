@@ -32,7 +32,7 @@ const Home = () => {
     dispatch(getPosts());
 
     return () => {
-      dispatch(reset());
+      //   dispatch(reset());
     };
   }, [isError, message, dispatch]);
 

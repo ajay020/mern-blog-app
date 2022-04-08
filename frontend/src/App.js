@@ -9,6 +9,7 @@ import UpdatePost from './pages/UpdatePost';
 import 'react-toastify/dist/ReactToastify.css';
 import PageNotFound from './pages/PageNotFound';
 import BookMarkPostList from './components/BookMarkPostList';
+import PostDetails from './pages/PostDetails';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                 <Route path='/login' element = {<Login/>} />
                 <Route path='/register' element = {<Register/>} />
                 <Route path='/addPost' element = {<AddPost/>} />
+                <Route path='/post-details/:postId' element = {<PostDetails/>} />
                 <Route path='/bookmarked-posts' element = {<BookMarkPostList/>} />
                 <Route path='/updatePost/:postId' element = {<UpdatePost />} />
                 <Route path="*" element={<PageNotFound/>}/>

@@ -172,3 +172,8 @@ const postSlice = createSlice({
 export const {reset} = postSlice.actions ;
 
 export default postSlice.reducer
+
+export const getPostById = (postId, state)=>{
+    const post = state.post.posts.find(post => post._id === postId);
+    return post; 
+}

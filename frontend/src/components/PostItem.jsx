@@ -45,6 +45,15 @@ const PostItem = ({
     }
   };
 
+  const readMore = (
+    <div>
+      <p className="p-0 m-0 d-inline">{content.slice(0, 180)}</p>
+      <span className="p-0 ms-1 text-primary">
+        <Link to={`/post-details/${_id}`}>Read more...</Link>
+      </span>
+    </div>
+  );
+
   return (
     <div className="card my-2" style={{ width: "26rem" }}>
       <div className="card-body">
@@ -76,7 +85,7 @@ const PostItem = ({
           </div>
         </div>
         <hr className=" my-1 p-0" />
-        <p className="card-text">{content}</p>
+        <p className="card-text">{content.length > 100 ? readMore : content}</p>
       </div>
       <div className="card-footer p-2 d-flex justify-content-between">
         <div className="d-flex align-items-center  ms-3">
