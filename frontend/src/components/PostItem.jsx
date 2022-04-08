@@ -55,7 +55,7 @@ const PostItem = ({
   );
 
   return (
-    <div className="card my-2" style={{ width: "26rem" }}>
+    <div className="card my-2" style={{ width: "30rem" }}>
       <div className="card-body">
         <div className="d-flex justify-content-between">
           <div className=" me-2">
