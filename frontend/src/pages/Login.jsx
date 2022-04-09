@@ -73,7 +73,7 @@ const Login = () => {
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            placeholder="Enter email"
+            placeholder="Email"
             onChange={onChange}
             value={email}
           />
@@ -91,7 +91,7 @@ const Login = () => {
           />
         </div>
         <div className="form-group text-center my-2">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn text-white bg-black">
             Login
           </button>
         </div>

@@ -9,15 +9,9 @@ body {
 
 }
 
-/* #root{
-    background-color: #555;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    position: fixed;
-    width: 100vw;
-    overflow-y: auto;
-} */
+label{
+    color: black;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
