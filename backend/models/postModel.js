@@ -19,6 +19,10 @@ const postSchema = mongoose.Schema({
     },
     upvotes:{
         type: [mongoose.Types.ObjectId],
+    }, 
+    imageUrl: {
+        type: String,
+        default: ''
     }
 },
 {

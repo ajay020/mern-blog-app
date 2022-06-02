@@ -5,14 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const AddPost = () => {
-  const [formData, setFormData] = useState({
+  const [postData, setPostData] = useState({
     title: "",
     content: "",
+    image: null,
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  const { title, content } = formData;
+
+  const { title, content } = postData;
   const { posts, isError, isSuccess, isLoading, message } = useSelector(
     (state) => state.post
   );
@@ -24,7 +26,7 @@ const AddPost = () => {
   }, []);
 
   const onChange = (e) => {
-    setFormData((prevState) => ({
+    setPostData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
@@ -32,11 +34,15 @@ const AddPost = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const postData = {
-      ...formData,
-    };
-    dispatch(createNewPost(postData));
-    setFormData({ title: "", content: "" });
+
+    if (!title) return;
+    const formData = new FormData();
+    formData.append("title", postData.title);
+    formData.append("content", postData.content);
+    formData.append("image", postData.image);
+
+    dispatch(createNewPost(formData));
+    setPostData({ title: "", content: "" });
     navigate("/");
   };
 
@@ -47,7 +53,7 @@ const AddPost = () => {
   return (
     <div className="container w-50 mx-auto my-5 pt-2 ">
       <h3 className="text-center">Create Post </h3>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} encType="multipart/form-data">
         <div className="form-group">
           <label htmlFor="titleInput">Post Title</label>
           <input
@@ -71,6 +77,16 @@ const AddPost = () => {
             className="form-control"
             id="postContent"
             placeholder="write here..."
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="uploadFile">Upload image</label>
+          <input
+            onChange={(e) => (postData.image = e.target.files[0])}
+            name="image"
+            type="file"
+            className="form-control"
+            id="uploadFile"
           />
         </div>
         <div className="form-group my-2">

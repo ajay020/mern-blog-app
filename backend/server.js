@@ -14,12 +14,16 @@ db();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+app.use(express.static('public'));
+
 // app.use(session({
 //     secret: 'keyboard cat',
 //     resave: true,
 //     saveUninitialized: false,
 //     // cookie:{maxAge: 60000}
 // }))
+
+
 
 app.use("/api/posts", require('./routes/postRoutes'));
 app.use("/api/users", require('./routes/userRoutes'));

@@ -1,5 +1,6 @@
-const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 const Post = require('../models/postModel');
+const upload = require('../middleware/uploadMiddleware');
 
 
 const getPosts = async (req, res) =>{
@@ -15,13 +16,15 @@ const createPost = async(req, res) => {
     if(!req.body){
         res.status(400).json({message : "Please enter data"});
     }
-    
+    // console.log(req.body);
     try {
         const post  = await Post.create(
             {
                 user:req.user.id,
                 username: req.user.name,
-                 ...req.body
+                 title: req.body.title,
+                 content: req.body.content,
+                 imageUrl: req.file ? `images/${req.file.filename}`: ''
             });
         res.status(200).json(post);
 
@@ -45,7 +48,7 @@ const updatePost = async(req, res) => {
             return res.status(401).json({message: "User not authorized"});
         }
         //update post
-        const updatedPost = await Post.findByIdAndUpdate(postId, req.body, {new: true});
+        const updatedPost = await Post.findByIdAndUpdate(postId, {...req.body, imageUrl: req.file ? `images/${req.file.filename}`: ''}, {new: true});
         res.status(200).json(updatedPost);
     } catch (error) {
         res.status(400).json({err: error.message});
@@ -106,10 +109,12 @@ const upvotePost = async (req, res) =>{
     }
 }
 
+
+
 module.exports = {
     getPosts,
     createPost,
     updatePost,
     deletePost ,
-    upvotePost 
+    upvotePost, 
 }

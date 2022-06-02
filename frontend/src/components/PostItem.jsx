@@ -9,7 +9,7 @@ import { useState } from "react";
 import { bookMarkPost } from "../features/auth/authSlice";
 
 const PostItem = ({
-  post: { _id, user, username, title, content, createdAt, upvotes },
+  post: { _id, user, username, title, content, createdAt, upvotes, imageUrl },
 }) => {
   const { user: currentuser } = useSelector((state) => state.auth);
 
@@ -85,7 +85,18 @@ const PostItem = ({
           </div>
         </div>
         <hr className=" my-1 p-0" />
-        <p className="card-text">{content.length > 100 ? readMore : content}</p>
+        <div className="d-flex justify-content-between">
+          <p className="card-text">
+            {content.length > 100 ? readMore : content}
+          </p>
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt=""
+              style={{ width: "80px", height: "80px" }}
+            />
+          )}
+        </div>
       </div>
       <div className="card-footer p-2 d-flex justify-content-between">
         <div className="d-flex align-items-center  ms-3">
