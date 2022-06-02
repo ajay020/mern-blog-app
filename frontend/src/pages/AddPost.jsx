@@ -51,7 +51,7 @@ const AddPost = () => {
   }
 
   return (
-    <div className="container w-50 mx-auto my-5 pt-2 ">
+    <div className="container w-50 mx-auto bg-secondary p-2 my-5 text-black ">
       <h3 className="text-center">Create Post </h3>
       <form onSubmit={submitHandler} encType="multipart/form-data">
         <div className="form-group">
