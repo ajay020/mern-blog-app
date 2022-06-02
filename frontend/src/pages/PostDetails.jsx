@@ -5,8 +5,8 @@ import { getPostById } from "../features/post/postSlice";
 
 const PostDetails = () => {
   const { postId } = useParams();
-  const { user, username, title, content, createdAt } = useSelector((state) =>
-    getPostById(postId, state)
+  const { user, username, title, content, createdAt, imageUrl } = useSelector(
+    (state) => getPostById(postId, state)
   );
 
   const currentuser = useSelector((state) => state.auth.user);
@@ -15,9 +15,17 @@ const PostDetails = () => {
   let formatedDate =
     date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
 
+  //   console.log(imageUrl);
+
   return (
     <div className="container w-50  mx-auto" style={{ marginTop: "100px" }}>
       <div className="card my-3">
+        <img
+          src={"http://localhost:3000/" + imageUrl}
+          alt=""
+          style={{ width: "100%", height: "280px" }}
+        />
+
         <div className="card-body">
           <div className="d-flex justify-content-between">
             <div className=" me-2">
