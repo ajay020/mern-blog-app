@@ -20,11 +20,13 @@ const PostDetails = () => {
   return (
     <div className="container w-50  mx-auto" style={{ marginTop: "100px" }}>
       <div className="card my-3">
-        <img
-          src={"http://localhost:3000/" + imageUrl}
-          alt=""
-          style={{ width: "100%", height: "280px" }}
-        />
+        {imageUrl && (
+          <img
+            src={"http://localhost:3000/" + imageUrl}
+            alt=""
+            style={{ width: "100%", height: "280px" }}
+          />
+        )}
 
         <div className="card-body">
           <div className="d-flex justify-content-between">

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getBookMarkPosts } from "./../features/auth/authSlice";
 
@@ -53,9 +54,11 @@ const BookMarkPostList = () => {
           <div className="card-body">
             <div className="d-flex justify-content-between">
               <div className=" me-2">
-                <p className="card-title fw-bold m-0 p-0 text-capitalize fs-5 lh-1">
-                  {post.title}
-                </p>
+                <Link to={`/post-details/${post._id}`}>
+                  <p className="card-title fw-bold m-0 p-0 text-capitalize fs-5 lh-1">
+                    {post.title}
+                  </p>
+                </Link>
                 <small className=" m-0 p-0 fst-normal text-capitalize ">
                   {currentUser ? currentUser.name : "Anonymous"}
                 </small>
