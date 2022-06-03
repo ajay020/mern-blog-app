@@ -70,11 +70,14 @@ const deletePost = async(req, res)=>{
             return res.status(401).json({message: "User not authorized"});
         }
         
-        const filePath = 'public/'+ post.imageUrl;
-        fs.unlink(filePath, (err) =>{
-            if(err) return res.status(400).json({err: err.message});
-            console.log("File deleted successfully");
-        })
+        if(post.imageUrl){
+            const filePath = 'public/'+ post.imageUrl;
+            fs.unlink(filePath, (err) =>{
+                if(err) return res.status(400).json({err: err.message});
+                console.log("File deleted successfully");
+            })
+        }
+        
 
         await post.remove();
         res.status(200).json({id: postId});
