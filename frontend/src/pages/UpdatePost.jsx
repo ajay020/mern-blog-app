@@ -45,7 +45,10 @@ const UpdatePost = () => {
   }
 
   return (
-    <div className="container w-50 mx-auto my-5 ">
+    <div
+      className="container w-50 mx-auto bg-secondary p-2"
+      style={{ marginTop: "5rem" }}
+    >
       <h3 className="text-center">Update Post </h3>
       <form onSubmit={submitHandler}>
         <div className="form-group">
