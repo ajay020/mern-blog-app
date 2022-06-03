@@ -51,7 +51,10 @@ const AddPost = () => {
   }
 
   return (
-    <div className="container w-50 mx-auto bg-secondary p-2 my-5 text-black ">
+    <div
+      className="container w-50 mx-auto bg-secondary p-2 text-black"
+      style={{ marginTop: "5rem" }}
+    >
       <h3 className="text-center">Create Post </h3>
       <form onSubmit={submitHandler} encType="multipart/form-data">
         <div className="form-group">
