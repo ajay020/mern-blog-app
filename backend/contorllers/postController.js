@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const Post = require('../models/postModel');
 const upload = require('../middleware/uploadMiddleware');
 
@@ -69,6 +70,12 @@ const deletePost = async(req, res)=>{
             return res.status(401).json({message: "User not authorized"});
         }
         
+        const filePath = 'public/'+ post.imageUrl;
+        fs.unlink(filePath, (err) =>{
+            if(err) return res.status(400).json({err: err.message});
+            console.log("File deleted successfully");
+        })
+
         await post.remove();
         res.status(200).json({id: postId});
     } catch (error) {
