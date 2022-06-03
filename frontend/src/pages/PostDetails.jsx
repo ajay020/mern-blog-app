@@ -22,7 +22,7 @@ const PostDetails = () => {
       <div className="card my-3">
         {imageUrl && (
           <img
-            src={"http://localhost:5000/" + imageUrl}
+            src={imageUrl}
             alt=""
             style={{ width: "100%", height: "280px" }}
           />
