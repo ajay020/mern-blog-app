@@ -80,9 +80,9 @@ const deletePost = async(req, res)=>{
         
 
         await post.remove();
-        res.status(200).json({id: postId});
+       return res.status(200).json({id: postId});
     } catch (error) {
-        res.status(400).json({err: error.message});
+       return res.status(400).json({err: error.message});
     }
 }
 
